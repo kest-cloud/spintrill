@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "115577972218",
+    "project_id": "spintrill",
+    "storage_bucket": "spintrill.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:115577972218:android:5a40804d8eec4cc892b043",
+        "android_client_info": {
+          "package_name": "com.kest.spintrill"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "115577972218-mlhsu7omq9ogu3asvr86qgbb69hgsd6o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7al3z4nrga7xqhvKKo_kUXz5RXygbyac"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "115577972218-mlhsu7omq9ogu3asvr86qgbb69hgsd6o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
