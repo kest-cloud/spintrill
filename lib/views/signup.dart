@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spintrill/helper/helperfunction.dart';
 import 'package:spintrill/services/auth.dart';
 import 'package:spintrill/services/database.dart';
 import 'package:spintrill/widgets/widget.dart';
@@ -19,32 +20,38 @@ class _SignUpState extends State<SignUp> {
   DatabaseMethods databaseMethods = new DatabaseMethods();
 
   final formKey = GlobalKey<FormState>();
-  TextEditingController userNameTextEdittingController =
+  TextEditingController userNameTextEditingController =
       new TextEditingController();
-  TextEditingController emailTextEdittingController =
+  TextEditingController emailTextEditingController =
       new TextEditingController();
   TextEditingController passwordTextEdittingController =
       new TextEditingController();
 
   signMeUp() {
     if (formKey.currentState.validate()) {
+      Map<String, String> userInfoMap = {
+        'name': userNameTextEditingController.text,
+        'email': emailTextEditingController.text,
+      };
+
+      HelperFunctions.saveUserEmailSharePreference(
+          emailTextEditingController.text);
+
+      HelperFunctions.saveUserNameSharePreference(
+          userNameTextEditingController.text);
+
       setState(() {
         isLoading = true;
       });
 
       authMethods
-          .signUpwithEmailAndPassword(emailTextEdittingController.text,
+          .signUpwithEmailAndPassword(emailTextEditingController.text,
               passwordTextEdittingController.text)
           .then((val) {
         // print('val.uid');
 
-        Map<String, String> userInfoMap = {
-          'name': userNameTextEdittingController.text,
-          'email': emailTextEdittingController.text,
-        };
-
         databaseMethods.uploadUserInfo(userInfoMap);
-
+        HelperFunctions.saveUserLoggedInSharePreference(true);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => ChatRoom()),
@@ -77,7 +84,7 @@ class _SignUpState extends State<SignUp> {
                                     ? 'Please Provide a valid Username'
                                     : null;
                               },
-                              controller: userNameTextEdittingController,
+                              controller: userNameTextEditingController,
                               style: simpleTextStyle(),
                               decoration: textFieldInputDecoration('username'),
                             ),
@@ -89,16 +96,16 @@ class _SignUpState extends State<SignUp> {
                                     ? null
                                     : 'Please Provide a valid Email!';
                               },
-                              controller: emailTextEdittingController,
+                              controller: emailTextEditingController,
                               style: simpleTextStyle(),
                               decoration: textFieldInputDecoration('email'),
                             ),
                             TextFormField(
                               obscureText: true,
                               validator: (val) {
-                                return val.length > 6
+                                return val.length > 5
                                     ? null
-                                    : 'Please Provide Pasword More Than Six Digit!';
+                                    : 'Please Provide Pasword More Than Five Digit!';
                               },
                               controller: passwordTextEdittingController,
                               style: simpleTextStyle(),

@@ -4,15 +4,15 @@ import 'package:spintrill/modal/user.dart';
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  UserClass _userFromFirebaseUser(User user) {
+  UserClass _userFromFirebaseUser(FirebaseUser user) {
     return user != null ? UserClass(userId: user.uid) : null;
   }
 
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
-      UserCredential result = await _auth.signInWithEmailAndPassword(
+      AuthResult result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-      User firebaseUser = result.user;
+      FirebaseUser firebaseUser = result.user;
       return _userFromFirebaseUser(firebaseUser);
     } catch (e) {
       print(e.toString());
@@ -21,9 +21,9 @@ class AuthMethods {
 
   Future signUpwithEmailAndPassword(String email, String password) async {
     try {
-      UserCredential result = await _auth.createUserWithEmailAndPassword(
+      AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      User firebaseUser = result.user;
+      FirebaseUser firebaseUser = result.user;
       return _userFromFirebaseUser(firebaseUser);
     } catch (e) {
       print(e.toString());

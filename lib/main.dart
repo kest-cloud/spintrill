@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:spintrill/helper/authenticate.dart';
 //import 'package:spinchat/views/signin.dart';
 //import 'package:spinchat/views/signup.dart';
-import 'package:firebase_core/firebase_core.dart';
+//import 'package:firebase_core/firebase_core.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+void main() {
   runApp(MyApp());
 }
 

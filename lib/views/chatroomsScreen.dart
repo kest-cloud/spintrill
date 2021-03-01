@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:spintrill/helper/helperfunction.dart';
 import 'package:spintrill/services/auth.dart';
 import 'package:spintrill/helper/authenticate.dart';
 import 'package:spintrill/views/search.dart';
+import 'package:spintrill/helper/constant.dart';
+
 
 class ChatRoom extends StatefulWidget {
   @override
@@ -11,6 +14,14 @@ class ChatRoom extends StatefulWidget {
 class _ChatRoomState extends State<ChatRoom> {
   AuthMethods authMethods = new AuthMethods();
   @override
+  void initState() {
+    super.initState();
+  }
+
+  getUserInfo() {
+    Constants.myName = await HelperFunctions.getUserNameSharePreference();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
