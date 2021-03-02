@@ -50,7 +50,7 @@ class _SignUpState extends State<SignUp> {
           .then((val) {
         // print('val.uid');
 
-        databaseMethods.uploadUserInfo(userInfoMap);
+        databaseMethods.addUserInfo(userInfoMap);
         HelperFunctions.saveUserLoggedInSharePreference(true);
         Navigator.pushReplacement(
           context,

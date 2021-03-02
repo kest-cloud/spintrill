@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:spintrill/services/auth.dart';
 import 'package:spintrill/services/database.dart';
+import 'package:spintrill/views/chatroomsScreen.dart';
 import 'package:spintrill/widgets/widget.dart';
 import 'package:spintrill/helper/helperfunction.dart';
-import 'package:spintrill/views/chatroomsScreen.dart';
 
 class SignIn extends StatefulWidget {
   final Function toggle;
@@ -15,7 +15,6 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-
   final formKey = GlobalKey<FormState>();
   DatabaseMethods databaseMethods = new DatabaseMethods();
   AuthMethods authMethods = new AuthMethods();
@@ -28,39 +27,35 @@ class _SignInState extends State<SignIn> {
   QuerySnapshot snapshotUserInfo;
 
   signIn() {
-
-    if(formKey.currentState.validate()) {
-       HelperFunctions.saveUserEmailSharePreference(
+    if (formKey.currentState.validate()) {
+      HelperFunctions.saveUserEmailSharePreference(
           emailTextEditingController.text);
+      databaseMethods
+          .getUserInfo(emailTextEditingController.text)
+          .then((value) {
+        snapshotUserInfo = value;
+        HelperFunctions.saveUserNameSharePreference(
+            snapshotUserInfo.documents[0].data['name']);
+      });
 
       setState(() {
-              isLoading=true;
-            });
-    
-    databaseMethods.getUserByUserEmail(emailTextEditingController.text)
-        .then((val){
-          snapshotUserInfo = val;
-          HelperFunctions
-          .saveUserEmailSharePreference(snapshotUserInfo.documents[0].data['name']);
-        });
+        isLoading = true;
+      });
 
-    authMethods
-    .signInWithEmailAndPassword(emailTextEditingController.text, 
-    passwordTextEditingController.text).then((val){
-      if(val != null) {
-        
-        HelperFunctions.saveUserLoggedInSharePreference(true);
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => ChatRoom()),
-        );
-      }
-    });
-    
-    
+      authMethods
+          .signInWithEmailAndPassword(emailTextEditingController.text,
+              passwordTextEditingController.text)
+          .then((val) {
+        if (val != null) {
+          HelperFunctions.saveUserLoggedInSharePreference(true);
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => ChatRoom()),
+          );
+        }
+      });
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +71,7 @@ class _SignInState extends State<SignIn> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Form(
-                  key: ,
+                  key: formKey,
                   child: Column(children: [
                     TextFormField(
                       validator: (val) {
@@ -118,25 +113,26 @@ class _SignInState extends State<SignIn> {
                   height: 8,
                 ),
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     signIn();
                   },
-                child: Container(
-                  alignment: Alignment.center,
-                  width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.symmetric(vertical: 20),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(colors: [
-                      const Color(0xff007EF4),
-                      const Color(0xff2A75BC)
-                    ]),
-                    borderRadius: BorderRadius.circular(30),
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: MediaQuery.of(context).size.width,
+                    padding: EdgeInsets.symmetric(vertical: 20),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(colors: [
+                        const Color(0xff007EF4),
+                        const Color(0xff2A75BC)
+                      ]),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Text(
+                      'Sign In',
+                      style: mediumTextStyle(),
+                    ),
                   ),
-                  child: Text(
-                    'Sign In',
-                    style: mediumTextStyle(),
-                  ),
-                ),),
+                ),
                 SizedBox(height: 8),
                 Container(
                   alignment: Alignment.center,
