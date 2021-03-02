@@ -10,7 +10,7 @@ class DatabaseMethods {
   getUserInfo(String email) async {
     return Firestore.instance
         .collection("users")
-        .where("userEmail", isEqualTo: email)
+        .where("email", isEqualTo: email)
         .getDocuments()
         .catchError((e) {
       print(e.toString());
@@ -20,7 +20,7 @@ class DatabaseMethods {
   searchByName(String searchField) {
     return Firestore.instance
         .collection("users")
-        .where('userName', isEqualTo: searchField)
+        .where('name', isEqualTo: searchField)
         .getDocuments();
   }
 
@@ -54,8 +54,8 @@ class DatabaseMethods {
     });
   }
 
-  getUserChats(String itIsMyName) async {
-    return await Firestore.instance
+  getUserChats(String itIsMyName) {
+    return Firestore.instance
         .collection("chatRoom")
         .where('users', arrayContains: itIsMyName)
         .snapshots();

@@ -45,18 +45,18 @@ class _SearchState extends State<Search> {
             itemCount: searchResultSnapshot.documents.length,
             itemBuilder: (context, index) {
               return userTile(
-                searchResultSnapshot.documents[index].data["userName"],
-                searchResultSnapshot.documents[index].data["userEmail"],
+                searchResultSnapshot.documents[index].data["name"],
+                searchResultSnapshot.documents[index].data["email"],
               );
             })
         : Container();
   }
 
   /// 1.create a chatroom, send user to the chatroom, other userdetails
-  sendMessage(String userName) {
-    List<String> users = [Constants.myName, userName];
+  sendMessage(String name) {
+    List<String> users = [Constants.myName, name];
 
-    String chatRoomId = getChatRoomId(Constants.myName, userName);
+    String chatRoomId = getChatRoomId(Constants.myName, name);
 
     Map<String, dynamic> chatRoom = {
       "users": users,
@@ -73,7 +73,7 @@ class _SearchState extends State<Search> {
                 )));
   }
 
-  Widget userTile(String userName, String userEmail) {
+  Widget userTile(String name, String userEmail) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Row(
@@ -82,7 +82,7 @@ class _SearchState extends State<Search> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                userName,
+                name,
                 style: TextStyle(color: Colors.white, fontSize: 16),
               ),
               Text(
@@ -94,7 +94,7 @@ class _SearchState extends State<Search> {
           Spacer(),
           GestureDetector(
             onTap: () {
-              sendMessage(userName);
+              sendMessage(name);
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),

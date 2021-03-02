@@ -85,7 +85,7 @@ class _ChatRoomState extends State<ChatRoom> {
         child: chatRoomsList(),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.search),
+        child: Icon(Icons.search_sharp),
         onPressed: () {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => Search()));
