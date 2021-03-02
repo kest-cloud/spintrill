@@ -36,6 +36,7 @@ class _SignInState extends State<SignIn> {
         snapshotUserInfo = value;
         HelperFunctions.saveUserNameSharePreference(
             snapshotUserInfo.documents[0].data['name']);
+        print("${snapshotUserInfo.documents[0].data['name']}");
       });
 
       setState(() {

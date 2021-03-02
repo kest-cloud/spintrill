@@ -1,4 +1,5 @@
 import 'package:spintrill/helper/constant.dart';
+//import 'package:spintrill/helper/helperfunction.dart';
 //import 'package:spintrill/modal/user.dart';
 import 'package:spintrill/services/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -53,17 +54,17 @@ class _SearchState extends State<Search> {
   }
 
   /// 1.create a chatroom, send user to the chatroom, other userdetails
-  sendMessage(String name) {
+  sendMessage({String name}) {
     List<String> users = [Constants.myName, name];
 
     String chatRoomId = getChatRoomId(Constants.myName, name);
 
     Map<String, dynamic> chatRoom = {
       "users": users,
-      "chatRoomId": chatRoomId,
+      "chatroomid": chatRoomId,
     };
 
-    databaseMethods.addChatRoom(chatRoom, chatRoomId);
+    databaseMethods.addChatRoom(chatRoomId, chatRoom);
 
     Navigator.push(
         context,
@@ -94,7 +95,7 @@ class _SearchState extends State<Search> {
           Spacer(),
           GestureDetector(
             onTap: () {
-              sendMessage(name);
+              sendMessage(name: name);
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -111,17 +112,17 @@ class _SearchState extends State<Search> {
     );
   }
 
+  @override
+  void initState() {
+    super.initState();
+  }
+
   getChatRoomId(String a, String b) {
     if (a.substring(0, 1).codeUnitAt(0) > b.substring(0, 1).codeUnitAt(0)) {
       return "$b\_$a";
     } else {
       return "$a\_$b";
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
   }
 
   @override

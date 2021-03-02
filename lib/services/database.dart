@@ -24,10 +24,10 @@ class DatabaseMethods {
         .getDocuments();
   }
 
-  Future<bool> addChatRoom(chatRoom, chatRoomId) {
+  Future<void> addChatRoom(String chatroomid, chatRoom) {
     return Firestore.instance
-        .collection("chatRoom")
-        .document(chatRoomId)
+        .collection("ChatRoom")
+        .document(chatroomid)
         .setData(chatRoom)
         .catchError((e) {
       print(e);
@@ -36,7 +36,7 @@ class DatabaseMethods {
 
   getChats(String chatRoomId) async {
     return Firestore.instance
-        .collection("chatRoom")
+        .collection("ChatRoom")
         .document(chatRoomId)
         .collection("chats")
         .orderBy('time')
@@ -45,7 +45,7 @@ class DatabaseMethods {
 
   Future<void> addMessage(String chatRoomId, chatMessageData) {
     return Firestore.instance
-        .collection("chatRoom")
+        .collection("ChatRoom")
         .document(chatRoomId)
         .collection("chats")
         .add(chatMessageData)
@@ -56,7 +56,7 @@ class DatabaseMethods {
 
   getUserChats(String itIsMyName) {
     return Firestore.instance
-        .collection("chatRoom")
+        .collection("ChatRoom")
         .where('users', arrayContains: itIsMyName)
         .snapshots();
   }
